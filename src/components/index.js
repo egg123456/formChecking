@@ -7,6 +7,7 @@
  * @param {*} callback - 错误处理函数
  * @return {bool} 是否有该错误类型触发
  */
+import { isEmpty } from 'lodash';
 const checkingError = (e, v, type = 'format', callback) => {
   let has = false;
   const hasErr = (err = {}, values = {}) => {
@@ -22,7 +23,7 @@ const checkingError = (e, v, type = 'format', callback) => {
           } 
           temp.some(el => { 
             if (!el) return;
-            has = type === 'format' ? !!values[item] : !values[item];
+            has = type === 'format' ? !isEmpty(values[item]) : isEmpty(values[item]);
             has && typeof callback === 'function' && callback(el);
             return has;
           });
